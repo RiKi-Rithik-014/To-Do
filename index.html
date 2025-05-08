@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>To-Do List</title>
+</head>
+<body>
+    <a href="/logout" class="logout-btn">Logout</a>
+    <div class="glass">
+        <h2>Welcome, {{ session['user'] }}!</h2>
+        <form method="POST" action="/add">
+            <input type="text" name="task" placeholder="Add a task..." required>
+            <button type="submit">Add Task</button>
+        </form>
+        <ul class="tasks">
+            {% for task in tasks %}
+            <li class="{{ 'completed' if task.complete else '' }}">
+                <input type="checkbox" onclick="location.href='/complete/{{ task.id }}'" {% if task.complete %}checked{% endif %}>
+                {{ task.task }}
+                <a href="/delete/{{ task.id }}" style="color:red;float:right;">❌</a>
+            </li>
+            {% endfor %}
+        </ul>
+        </div>
+</body>
+</html>
